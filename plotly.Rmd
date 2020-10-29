@@ -1,0 +1,48 @@
+---
+title: "Plotly examples"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+# Examples of plotly
+
+# Loading data
+
+We're gonna look at NYC Airbnb data.
+
+```{r}
+library(tidyverse)
+library(p8105.datasets)
+library(plotly)
+```
+
+```{r}
+data("nyc_airbnb")
+
+nyc_airbnb =
+  nyc_airbnb %>%
+  mutate(rating = review_scores_location / 2) %>%
+  select(neighbourhood_group, neighbourhood, rating, price, room_type, lat, long) %>%
+  filter(
+    neighbourhood_group == "Manhattan",
+    price %in% 100:500,
+    room_type == "Entire home/apt"
+  ) %>%
+  drop_na(rating)
+```
+
+
+# Plotly plots
+
+## scatterplot
+
+```{r}
+nyc_airbnb %>%
+  plot_ly(x = ~lat, y = ~long)
+```
+
+
+
+
